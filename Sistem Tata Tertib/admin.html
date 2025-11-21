@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <link rel="icon" href="/Sistem Tata Tertib/image/logo sman 1 turen.png" type="image/png">
+    <title>Tatib - SMAN 1 Turen</title>
+</head>
+<body>
+    
+    <div id="logout-confirm-overlay" class="confirm-overlay hidden">
+        <div class="confirm-card">
+            <p>Apakah Anda yakin ingin keluar?</p>
+            <div class="confirm-buttons">
+                <button id="confirm-yes-btn" class="confirm-btn yes">Ya</button>
+                <button id="confirm-no-btn" class="confirm-btn no">Tidak</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="side-navbar">
+        <div>
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img class="logo" src="/Sistem Tata Tertib/image/logo sman 1 turen.png" alt="Logo">
+                </div>
+                <div class="navbar-title">
+                    <span class="navbar-text">SIMPEL SMANERE</span>
+                </div>
+            </div>
+            <div class="menu">
+                <span class="menu-item overview active" data-content="overview">Overview</span>
+                <div class="data-container">
+                    <div class="data-header">
+                        <span class="manage-data">Manajemen Data</span>
+                        <img class="arrow-open" src="/Sistem Tata Tertib/image/icons8-right-arrow-48 (1).png" alt=""> 
+                    </div>
+                    <div class="sub-menu">
+                        <span class="menu-item" data-content="data-siswa">Data Siswa</span>
+                        <span class="menu-item" data-content="data-guru">Data Guru</span>
+                        <span class="menu-item" data-content="data-admin">Manajemen Admin</span>
+                        <span class="menu-item" data-content="data-pelanggaran-sub">Data Pelanggaran</span>
+                    </div>
+                </div>
+                <span class="menu-item pelanggaran" data-content="pelanggaran">Pelanggaran Siswa</span>
+                
+                <div class="data-container">
+                    <div class="data-header laporan-header">
+                        <span class="manage-data">Laporan</span>
+                        <img class="arrow-open" src="/Sistem Tata Tertib/image/icons8-right-arrow-48 (1).png" alt=""> 
+                    </div>
+                    <div class="sub-menu laporan-sub-menu">
+                        <span class="menu-item" data-content="report-guru">Laporan Guru Tatib</span>
+                        <span class="menu-item" data-content="report-statistik">Statistik</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-profile" id="adminUserProfile">
+            <img class="profile-pic" src="/Sistem Tata Tertib/image/icons8-user-48.png" alt="User Profile">
+            <div class="profile-details">
+                <span class="profile-name">Admin Name</span>
+                <span class="profile-status">Admin</span>
+            </div>
+            <div id="logout-dropdown" class="logout-dropdown hidden">
+                <div id="showConfirmLogout" class="logout-item">
+                    <span style="font-size: 18px; line-height: 1; margin-right: 5px;">&#x2192;</span> Logout
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="content-section overview-content">
+            <h2>Dashboard</h2>
+            <p id="adminDashboardDate"></p> <!-- ELEMEN TANGGAL BARU -->
+            <!-- <p id="dashboardWelcomeText">Selamat datang di halaman Admin! Kelola seluruh data sistem tata tertib sekolah dari sini.</p> -->
+
+            <!-- CARD OVERVIEW BARU -->
+            <div class="admin-dashboard-columns">
+                <div class="dashboard-column admin-red">
+                    <h3>Siswa Butuh Tindak Lanjut (SP1+)</h3>
+                    <p id="totalSiswaBermasalah" class="metric-value">0</p>
+                </div>
+                <div class="dashboard-column admin-orange">
+                    <h3>Total Poin Pelanggaran Global</h3>
+                    <p id="totalPoinPelanggaranGlobal" class="metric-value">0</p>
+                </div>
+                <div class="dashboard-column admin-blue">
+                    <h3>Total Guru & Admin Terdaftar</h3>
+                    <p id="totalUserCount" class="metric-value">0</p>
+                </div>
+                <div class="dashboard-column admin-purple">
+                    <h3>Kelas dengan Rata-rata Poin Tertinggi</h3>
+                    <p id="kelasPoinTertinggi" class="metric-value">-</p>
+                </div>
+            </div>
+            <!-- AKHIR CARD OVERVIEW BARU -->
+
+        </div>
+
+        <div class="content-section data-siswa-content hidden">
+            <h2>Manajemen Data - Data Siswa</h2>
+            <div class="controls-container">
+                <input type="text" id="search-bar-siswa" placeholder="Cari siswa...">
+                <div class="filters">
+                    <select id="sort-select-siswa">
+                        <option value="az">A-Z</option>
+                        <option value="poin-tertinggi">Poin Tertinggi</option>
+                        <option value="kelas">Kelas</option>
+                        <option value="jenis_kelamin">Jenis Kelamin</option>
+                        <option value="status">Status</option>
+                    </select>
+                    <select id="filter-kelas-siswa"><option value="all">Semua Kelas</option></select>
+                    <select id="filter-gender-siswa"><option value="all">Semua Gender</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                    <select id="filter-status-siswa"><option value="all">Semua Status</option></select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="siswa-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIS</th>
+                            <th>Password</th>
+                            <th>Nama</th>
+                            <th>Kelas</th>
+                            <th>No. Hp</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Poin Pelanggaran</th>
+                            <th>Poin Penghargaan</th>
+                            <th>Poin Akumulasi</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="bottom-container">
+                <div class="pagination-container-siswa"></div>
+                <div class="action-buttons-group">
+                    <button id="add-siswa-button" class="add-button">Tambah Siswa</button>
+                    <!-- Tombol Export Excel Dihapus -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section data-guru-content hidden">
+            <h2>Manajemen Data - Data Guru</h2>
+            <div class="controls-container">
+                <input type="text" id="search-bar-guru" placeholder="Cari guru...">
+                <div class="filters">
+                    <select id="sort-select-guru"><option value="az">A-Z</option><option value="jenis_kelamin">Jenis Kelamin</option></select>
+                    <select id="filter-gender-guru"><option value="all">Semua Gender</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="guru-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIP</th>
+                            <th>Password</th>
+                            <th>Nama</th>
+                            <th>No. HP</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="bottom-container">
+                <div class="pagination-container-guru"></div>
+                <div class="action-buttons-group">
+                    <button id="add-guru-button" class="add-button">Tambah Guru</button>
+                    <!-- Tombol Export Excel Dihapus -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section data-admin-content hidden">
+            <h2>Manajemen Data - Manajemen Admin</h2>
+            <div class="controls-container">
+                <input type="text" id="search-bar-admin" placeholder="Cari admin...">
+                <div class="filters">
+                    <select id="sort-select-admin"><option value="az">A-Z</option><option value="jenis_kelamin">Jenis Kelamin</option></select>
+                    <select id="filter-gender-admin"><option value="all">Semua Gender</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="admin-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIP</th>
+                            <th>Password</th>
+                            <th>Nama</th>
+                            <th>No. HP</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="bottom-container">
+                <div class="pagination-container-admin"></div>
+                <div class="action-buttons-group">
+                    <button id="add-admin-button" class="add-button">Tambah Admin</button>
+                    <!-- Tombol Export Excel Dihapus -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section data-pelanggaran-sub-content hidden">
+            <h2>Manajemen Data - Data Pelanggaran</h2>
+            <div class="controls-container">
+                <input type="text" id="search-bar-pelanggaran" placeholder="Cari pelanggaran...">
+                <div class="filters">
+                    <select id="sort-select-pelanggaran">
+                        <option value="az">A-Z</option>
+                        <option value="poin-tertinggi">Poin Tertinggi</option>
+                        <option value="poin-terendah">Poin Terendah</option>
+                    </select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="pelanggaran-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Pelanggaran</th>
+                            <th>Poin</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="bottom-container">
+                <div class="pagination-container-pelanggaran"></div>
+                <div class="action-buttons-group">
+                    <button id="add-pelanggaran-button" class="add-button">Tambah Pelanggaran</button>
+                    <!-- Tombol Export Excel Dihapus -->
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section pelanggaran-content hidden">
+            <h2>Pelanggaran Siswa</h2>
+            <div class="controls-container">
+                <input type="text" id="search-bar-pelanggaran-siswa" placeholder="Cari siswa atau pelanggaran...">
+                <div class="filters">
+                    <select id="filter-kelas-pelanggaran-siswa"><option value="all">Semua Kelas</option></select>
+                    <select id="filter-gender-pelanggaran-siswa"><option value="all">Semua Gender</option><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                    <select id="filter-jenis-pelanggaran-siswa"><option value="all">Semua Pelanggaran</option></select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="pelanggaran-siswa-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIS</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Kelas</th>
+                            <th>Nama Pelanggaran</th>
+                            <th>Tanggal</th> <th>Poin</th>
+                            <th>Guru</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="bottom-container">
+                <div class="pagination-container-pelanggaran-siswa"></div>
+                <div class="action-buttons-group">
+                    <!-- Tombol Export Excel Dihapus -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section report-guru-content hidden">
+            <h2>Laporan Guru Tatib (Riwayat Pelaporan)</h2>
+            <div id="laporan-guru-list" class="report-list-container">
+                </div>
+        </div>
+
+        <div class="content-section report-statistik-content hidden">
+            <h2>Statistik Pelanggaran Per Kelas</h2>
+            <div class="controls-container">
+                <div class="filters">
+                    <select id="filter-kelas-statistik"><option value="all">Semua Kelas</option></select>
+                </div>
+            </div>
+            <div class="table-container">
+                <table id="statistik-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kelas</th>
+                            <th>Jumlah Pelanggaran</th>
+                            <th>Jumlah Poin Pelanggaran</th>
+                            <th>Jumlah Poin Penghargaan</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="content-section tatib-content hidden"><h2>Manajemen Tata Tertib</h2><p>Content for Manajemen Tata Tertib.</p></div>
+        <div class="content-section user-content hidden"><h2>Manajemen User</h2><p>Content for Manajemen User.</p></div>
+        <div class="content-section settings-content hidden"><h2>Pengaturan</h2><p>Content for Pengaturan.</p></div>
+        <div class="content-section log-content hidden"><h2>Riwayat</h2><p>Content for Riwayat.</p></div>
+    </div>
+
+    <div id="add-modal-siswa" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Tambah Data Siswa</h2>
+            <form id="add-form-siswa">
+                <label for="add-nis-siswa">NIS:</label><input type="text" id="add-nis-siswa" required>
+                <label for="add-password-siswa">Password:</label><input type="text" id="add-password-siswa" required>
+                <label for="add-nama-siswa">Nama:</label><input type="text" id="add-nama-siswa" required>
+                <label for="add-kelas-siswa">Kelas:</label><select id="add-kelas-siswa"></select>
+                <label for="add-hp-siswa">Nomor HP:</label><input type="text" id="add-hp-siswa">
+                <label for="add-gender-siswa">Jenis Kelamin:</label><select id="add-gender-siswa"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <div class="modal-buttons"><button type="submit">Tambah</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-modal-siswa" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Data Siswa</h2>
+            <form id="edit-form-siswa">
+                <input type="hidden" id="edit-id-siswa">
+                <label for="edit-password-siswa">Password:</label><input type="text" id="edit-password-siswa" required>
+                <label for="edit-nama-siswa">Nama:</label><input type="text" id="edit-nama-siswa" required>
+                <label for="edit-kelas-siswa">Kelas:</label><select id="edit-kelas-siswa"></select>
+                <label for="edit-gender-siswa">Jenis Kelamin:</label><select id="edit-gender-siswa"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <label for="edit-hp-siswa">Nomor HP:</label><input type="text" id="edit-hp-siswa">
+                <div class="modal-buttons"><button type="submit">Edit</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-modal-guru" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Tambah Data Guru</h2>
+            <form id="add-form-guru">
+                <label for="add-nip-guru">NIP:</label><input type="text" id="add-nip-guru" required>
+                <label for="add-password-guru">Password:</label><input type="text" id="add-password-guru" required>
+                <label for="add-nama-guru">Nama:</label><input type="text" id="add-nama-guru" required>
+                <label for="add-hp-guru">Nomor HP:</label><input type="text" id="add-hp-guru">
+                <label for="add-gender-guru">Jenis Kelamin:</label><select id="add-gender-guru"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <div class="modal-buttons"><button type="submit">Tambah</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-modal-guru" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Data Guru</h2>
+            <form id="edit-form-guru">
+                <input type="hidden" id="edit-id-guru">
+                <label for="edit-password-guru">Password:</label><input type="text" id="edit-password-guru" required>
+                <label for="edit-nama-guru">Nama:</label><input type="text" id="edit-nama-guru" required>
+                <label for="edit-gender-guru">Jenis Kelamin:</label><select id="edit-gender-guru"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <label for="edit-hp-guru">Nomor HP:</label><input type="text" id="edit-hp-guru">
+                <div class="modal-buttons"><button type="submit">Edit</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-modal-admin" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Tambah Data Admin</h2>
+            <form id="add-form-admin">
+                <label for="add-nip-admin">NIP:</label><input type="text" id="add-nip-admin" required>
+                <label for="add-password-admin">Password:</label><input type="text" id="add-password-admin" required>
+                <label for="add-nama-admin">Nama:</label><input type="text" id="add-nama-admin" required>
+                <label for="add-hp-admin">Nomor HP:</label><input type="text" id="add-hp-admin">
+                <label for="add-gender-admin">Jenis Kelamin:</label><select id="add-gender-admin"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <div class="modal-buttons"><button type="submit">Tambah</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-modal-admin" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Data Admin</h2>
+            <form id="edit-form-admin">
+                <input type="hidden" id="edit-id-admin">
+                <label for="edit-password-admin">Password:</label><input type="text" id="edit-password-admin" required>
+                <label for="edit-nama-admin">Nama:</label><input type="text" id="edit-nama-admin" required>
+                <label for="edit-gender-admin">Jenis Kelamin:</label><select id="edit-gender-admin"><option value="L">Laki-laki</option><option value="P">Perempuan</option></select>
+                <label for="edit-hp-admin">Nomor HP:</label><input type="text" id="edit-hp-admin">
+                <div class="modal-buttons"><button type="submit">Edit</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="add-modal-pelanggaran" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Tambah Data Pelanggaran</h2>
+            <form id="add-form-pelanggaran">
+                <label for="add-nama-pelanggaran">Nama Pelanggaran:</label><input type="text" id="add-nama-pelanggaran" required>
+                <label for="add-poin-pelanggaran">Poin:</label><input type="number" id="add-poin-pelanggaran" required>
+                <div class="modal-buttons"><button type="submit">Tambah</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-modal-pelanggaran" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Data Pelanggaran</h2>
+            <form id="edit-form-pelanggaran">
+                <input type="hidden" id="edit-id-pelanggaran">
+                <label for="edit-nama-pelanggaran">Nama Pelanggaran:</label><input type="text" id="edit-nama-pelanggaran" required>
+                <label for="edit-poin-pelanggaran">Poin:</label><input type="number" id="edit-poin-pelanggaran" required>
+                <div class="modal-buttons"><button type="submit">Edit</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <div id="edit-modal-pelanggaran-siswa" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Edit Data Pelanggaran Siswa</h2>
+            <form id="edit-form-pelanggaran-siswa">
+                <input type="hidden" id="edit-id-pelanggaran-siswa">
+                <label for="edit-nama-siswa-pelanggaran">Nama Siswa:</label><input type="text" id="edit-nama-siswa-pelanggaran" disabled>
+                <label for="edit-kelas-siswa-pelanggaran">Kelas:</label><input type="text" id="edit-kelas-siswa-pelanggaran" disabled>
+                
+                <label for="edit-nama-pelanggaran-selected">Jenis Pelanggaran:</label>
+                <select id="edit-nama-pelanggaran-selected"></select>
+                
+                <label for="edit-poin-pelanggaran-siswa">Poin:</label><input type="number" id="edit-poin-pelanggaran-siswa" required disabled>
+                
+                <label for="edit-guru-pelanggaran-selected">Guru Pelapor:</label>
+                <select id="edit-guru-pelanggaran-selected"></select>
+                
+                <div class="modal-buttons"><button type="submit">Edit</button><button type="button" class="cancel-btn">Batal</button></div>
+            </form>
+        </div>
+    </div>
+
+    <script src="db.js"></script>
+    <script src="admin.js" type="module"></script>
+</body>
+</html>

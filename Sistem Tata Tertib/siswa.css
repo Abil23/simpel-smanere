@@ -1,0 +1,839 @@
+/* General Body and Font Styles */
+body {
+    box-sizing: border-box;
+    background: white;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Notification Pop-up */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: -300px; /* Start off-screen */
+    width: 280px;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: #dc3545; /* Red for error */
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: right 0.5s ease-in-out;
+    z-index: 1000;
+}
+
+.notification.show {
+    right: 20px; /* Slide in */
+}
+
+/* Confirmation Modal */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.confirm-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.confirm-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.confirm-overlay.show .confirm-card {
+    transform: scale(1);
+}
+
+.confirm-card p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.confirm-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-btn.yes {
+    background: #28a745;
+    color: white;
+}
+
+.confirm-btn.yes:hover {
+    background: #218838;
+}
+
+.confirm-btn.no {
+    background: #dc3545;
+    color: white;
+}
+
+.confirm-btn.no:hover {
+    background: #c82333;
+}
+
+/* Login Card */
+.login-card {
+    vertical-align: middle;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 420px;
+    padding: 40px;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    margin: auto; /* Center the login card */
+}
+
+.logo-container {
+    margin-bottom: 24px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.logo img {
+    width: 60px;
+    height: 80px;
+    fill: #ffffff;
+}
+
+.login-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e3c72;
+    margin-bottom: 32px;
+    line-height: 1.4;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+    background: white;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.login-button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 24px;
+    box-shadow: 0 4px 15px #667eea66;
+}
+
+.login-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+}
+
+.login-button:active {
+    transform: translateY(0);
+}
+
+/* Dashboard */
+.dashboard {
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: white;
+}
+
+/* Navbar */
+.navbar {
+    background: #ffffff;
+    color: white;
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-logo {
+    width: 30px;
+    height: 40px;
+    margin-right: 12px;
+    vertical-align: middle;
+}
+
+.navbar-text {
+    vertical-align: middle;
+    color: #333;
+    padding-left: 8px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.user-badge {
+    background: rgba(63, 95, 240, 0.6);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-right: 16px;
+}
+
+.logout-btn {
+    background: rgba(251, 251, 255, 0.8);
+    border: none;
+    color: black;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #fc1313;
+    color: white;
+}
+
+/* Main Content */
+.main {
+    padding: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.user-point {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffffff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #04949eff;
+    display: inline-block;
+    margin-right: 8px;
+}
+
+.user-status {
+    font-size: 14px;
+    font-weight: 600;
+    color: #28a745;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: #e6f4ea;
+    display: inline-block;
+    margin-top: 8px;
+}
+
+.come {
+    display: flex;
+    justify-content: space-between;
+}
+
+.welcome {
+    background: white;
+    padding: 24px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #667eea;
+}
+
+.welcome .w-text {
+    font-size: 24px;
+    font-weight: 500;
+    color: #3347a0ff;
+    padding-top: 8px;
+}
+
+.welcome .ws-text {
+    font-size: 16px;
+    padding-top: 8px;
+    padding-bottom: 16px;
+    color: #555;
+}
+
+.welcome .navigation {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    padding-top: 16px;
+    border-top: 2px solid #f0f0f0;
+}
+
+.welcome .navigation > div {
+    display: block;
+    padding: 12px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+}
+
+.welcome .navigation > div:hover {
+    transform: translateY(-2px);
+}
+
+.welcome .navigation img {
+    width: 60px;
+    height: 60px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.welcome .navigation p {
+    font-size: 14px;
+}
+
+/* Info Cards */
+.info {
+    background: white;
+    padding: 36px 18px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #667eea;
+}
+
+.info-card {
+    display: flex;
+    justify-content: center;
+    gap: 36px;
+}
+
+.info-card > div {
+    padding: 16px;
+    border-radius: 16px;
+    transition: all 0.4s ease;
+}
+
+.info-card > div:hover {
+    transform: translateY(-2px);
+}
+
+.penghargaan {
+    background: #28a745ff;
+}
+
+.penghargaan:hover {
+    box-shadow: 0 6px 20px rgba(40, 167, 69, 0.5);
+}
+
+.mt-penghargaan {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding: 12px;
+    padding-right: 40px;
+}
+
+.st-penghargaan {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    padding: 12px;
+}
+
+.poin {
+    background: #f30000ff;
+}
+
+.poin:hover {
+    box-shadow: 0 6px 20px rgba(243, 0, 0, 0.5);
+}
+
+.mt-poin {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding: 12px;
+    padding-right: 90px;
+}
+
+.st-poin {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    padding: 12px;
+}
+
+.langgar {
+    background: #007ef3ff;
+}
+
+.langgar:hover {
+    box-shadow: 0 6px 20px rgba(0, 126, 243, 0.5);
+}
+
+.mt-langgar {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    padding: 12px;
+    padding-right: 48px;
+}
+
+.st-langgar {
+    color: white;
+    font-size: 48px;
+    font-weight: 700;
+    padding: 12px;
+}
+
+/* Hukuman & Riwayat */
+.hukuman {
+    background: white;
+    padding: 36px 18px;
+    border-radius: 12px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-bottom: 4px solid #667eea;
+}
+
+.hukuman-title {
+    padding-top: 20px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-left: 16px;
+}
+
+.hukuman-card {
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid #f0f0f0;
+    border-radius: 20px;
+    margin: 16px;
+    padding: 18px;
+}
+
+.hukuman-card h2 {
+    font-size: 24px;
+    font-weight: 500;
+    padding: 12px 12px 12px 0px;
+}
+
+.hukuman-card p {
+    font-size: 18px;
+    padding-top: 8px;
+    padding-bottom: 4px;
+}
+
+.hukuman-ket {
+    font-size: 16px;
+    color: grey;
+    padding-bottom: 8px;
+}
+
+.guru {
+    background: #04949eff;
+    border-radius: 16px;
+    padding: 4px 12px;
+    color: white;
+}
+
+.sisi-kiri {
+    max-width: 600px;
+}
+
+.sisi-kanan {
+    gap: 10px;
+    padding-top: 12px;
+}
+
+.hukuman-poin {
+    background: rgba(252, 19, 19, 1);
+    font-weight: 600;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 16px;
+}
+
+.hukuman-status {
+    background: #ff9900;
+    padding: 4px 12px;
+    color: white;
+    border-radius: 16px;
+    font-weight: 600;
+}
+
+.riwayat-card {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+th, td {
+    padding: 16px;
+    text-align: left;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+}
+
+tbody tr:hover {
+    background-color: #f1f3f5;
+}
+
+/* Informasi */
+.Informasi {
+    display: flex;
+    justify-content: space-around;
+}
+
+a {
+    text-decoration: none;
+}
+
+.informasi-tatib {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 500px;
+    padding: 36px 18px;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.7s ease;
+}
+
+.informasi-title {
+    font-size: 16px;
+    padding: 8px;
+}
+
+.informasi-sub {
+    font-size: 14px;
+    color: grey;
+}
+
+.informasi-tatib:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Profil Card */
+.profil-container {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin: 20px auto;
+    max-width: 900px;
+}
+
+.profil-identity-card, .profil-info-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    padding: 40px;
+}
+
+.profil-identity-card {
+    text-align: center;
+    width: 35%;
+}
+
+.profil-icon {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 16px;
+}
+
+.profil-identity-card h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.profil-identity-card p {
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.profil-info-card {
+    width: 65%;
+}
+
+.profil-info-card h4 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 8px;
+}
+
+.profil-user-badge {
+    background: rgba(63, 95, 240, 0.6);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    font-size: 16px;
+}
+
+.info-label {
+    font-weight: 500;
+}
+
+#show-password {
+    background: none;
+    border: none;
+    color: #667eea;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 8px;
+}
+
+.password-dots {
+    color: #333;
+}
+
+/* --- Responsive Design --- */
+
+/* Tablet View */
+@media (max-width: 1024px) {
+    .main {
+        padding: 16px;
+    }
+
+    .info-card {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .mt-penghargaan, .mt-poin, .mt-langgar {
+        padding-right: 12px;
+    }
+
+    .profil-container {
+        flex-direction: column;
+        gap: 16px;
+        max-width: 100%;
+    }
+
+    .profil-identity-card, .profil-info-card {
+        width: 100%;
+    }
+
+    .hukuman-card {
+        flex-direction: column;
+    }
+
+    .sisi-kanan {
+        padding-top: 16px;
+    }
+
+    .Informasi {
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .informasi-tatib {
+        width: 100%;
+    }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+    body {
+        /* Reset body styles for mobile dashboard view */
+        display: block;
+        padding: 0;
+        align-items: initial;
+        justify-content: initial;
+    }
+
+    .dashboard {
+        height: auto;
+    }
+
+    .main {
+        padding: 16px;
+    }
+
+    .navbar {
+        flex-direction: column;
+        padding: 16px;
+    }
+
+    .navbar-title {
+        margin-bottom: 16px;
+        text-align: center;
+    }
+
+    .navbar-text {
+        text-align: center;
+    }
+
+    .navbar-user {
+        display: flex;
+        align-items: center;
+    }
+
+    .welcome {
+        margin-top: 16px; /* Add space between navbar and welcome card */
+    }
+
+    .welcome .navigation {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    .come {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .status {
+        padding-bottom: 16px;
+    }
+
+    .info-card > div {
+        text-align: center;
+    }
+
+    .mt-penghargaan, .mt-poin, .mt-langgar {
+        padding-right: 0;
+    }
+
+    .st-penghargaan, .st-poin, .st-langgar {
+        font-size: 36px;
+    }
+
+    .hukuman-card {
+        padding: 16px;
+    }
+
+    .hukuman-card h2 {
+        font-size: 20px;
+    }
+
+    .hukuman-card p {
+        font-size: 16px;
+    }
+
+    .profil-container {
+        margin: 16px 0;
+    }
+
+    .profil-identity-card, .profil-info-card {
+        padding: 24px;
+    }
+
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-item .info-label {
+        margin-bottom: 4px;
+    }
+}

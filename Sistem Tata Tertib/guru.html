@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatib - SMAN 1 Turen</title>
+    <link rel="icon" href="/Sistem Tata Tertib/image/logo sman 1 turen.png" type="image/png">
+
+    <link rel="stylesheet" href="guru.css">
+</head>
+<body>
+
+<!-- LOGOUT CONFIRMATION OVERLAY -->
+<div id="logout-confirm-overlay" class="confirm-overlay hidden">
+    <div class="confirm-card">
+        <p>Apakah Anda yakin ingin keluar?</p>
+        <div class="confirm-buttons">
+            <button id="confirm-yes-btn" class="confirm-btn yes">Ya</button>
+            <button id="confirm-no-btn" class="confirm-btn no">Tidak</button>
+        </div>
+    </div>
+</div>
+
+<!-- DELETE CONFIRMATION OVERLAY -->
+<div id="delete-confirm-overlay" class="confirm-overlay hidden">
+    <div class="confirm-card">
+        <p>Apakah Anda yakin ingin menghapus data pelanggaran ini? Poin siswa akan dihitung ulang.</p>
+        <div class="confirm-buttons">
+            <!-- Tombol Ya/Hapus: Menggunakan style 'no' (merah) untuk aksi destruktif -->
+            <button id="delete-confirm-yes-btn" class="confirm-btn no">Ya, Hapus</button>
+            <!-- Tombol Batal: Menggunakan style 'yes' (hijau) untuk aksi aman -->
+            <button id="delete-confirm-no-btn" class="confirm-btn yes">Batal</button>
+        </div>
+        <input type="hidden" id="deleteRiwayatId" value="">
+    </div>
+</div>
+<!-- AKHIR DELETE CONFIRMATION OVERLAY -->
+
+<!-- Halaman Login Dihapus, hanya tersisa Dashboard -->
+
+<div id="mainPage" style="display: none;">
+
+    <div id="sidebar" class="side-navbar">
+        <div>
+            <div class="logo-section">
+                <div class="logo-container">
+                    <img class="logo" src="/Sistem Tata Tertib/image/logo sman 1 turen.png" alt="Logo">
+                </div>
+                <div class="navbar-title">
+                    <span class="navbar-text">SIMPEL SMANERE</span>
+                </div>
+            </div>
+
+            <div class="menu" id="menuContainer">
+                <span class="menu-item overview active" data-page="dashboard">Overview</span>
+                
+                <!-- DATA TATIB MENU (DROPDOWN) -->
+                <div class="data-container">
+                    <div class="data-header toggle-submenu">
+                        <span class="manage-data">Data Tatib</span>
+                        <!-- ICON PANAH BARU -->
+                        <img class="arrow-open" src="/Sistem Tata Tertib/image/icons8-right-arrow-48 (1).png" alt="">
+                    </div>
+                    <div class="sub-menu submenu">
+                        <span class="menu-item" data-page="daftar">Daftar Pelanggaran</span>
+                        <span class="menu-item" data-page="daftarPenghargaan">Daftar Penghargaan</span>
+                    </div>
+                </div>
+                <!-- AKHIR DATA TATIB MENU -->
+                
+                <span class="menu-item" data-page="rekap">Rekap Kelas</span>
+
+                <!-- Menu untuk Halaman Detail (Hidden/Tergantung navigasi JS) -->
+            </div>
+        </div>
+        
+        <div id="sidebar-profile" class="user-profile">
+            <div id="profile-photo-container" class="profile-photo profile-pic"><img src="/Sistem Tata Tertib/image/icons8-user-48.png" alt=""></div>
+            <div class="profile-details">
+                <span class="profile-name" id="guruName">Nama Guru</span>
+                <span class="profile-status" id="guruTitle">Guru Tatib</span>
+            </div>
+            <div id="logout-popup" class="hidden">
+                 <!-- HANYA TAMPILKAN LOGOUT -->
+                 <div id="showConfirmLogout">Logout</div>
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="main-content">
+
+        <!-- DASHBOARD (id: dashboard) -->
+        <div id="dashboard" class="card content-section">
+            <h2>Dashboard</h2>
+            <p id="dashboardDate"></p>
+            <div class="dashboard-columns">
+                <!-- CARD 1: PELANGGARAN HARIAN (id: dashboardcolumn-yellow) -->
+                <div class="dashboard-column yellow" id="dashboardcolumn-yellow" data-page="jumlahPelanggaran">
+                    <h3>Jumlah Pelanggaran</h3>
+                    <p id="jumlahPelanggaranHariIni">0</p>
+                </div>
+                <!-- CARD 2: PENGHARGAAN HARIAN (id: dashboardcolumn-green) -->
+                <div class="dashboard-column green" id="dashboardcolumn-green" data-page="jumlahPenghargaan">
+                    <h3>Jumlah Penghargaan</h3>
+                    <p id="jumlahPenghargaanHariIni">0</p>
+                </div>
+                <!-- CARD 3: SISWA POIN TERTINGGI (id: dashboardcolumn-red) -->
+                <div class="dashboard-column red" id="dashboardcolumn-red" data-page="detailSiswaTertinggi">
+                    <h3>Siswa dengan Poin Tertinggi</h3>
+                    <p id="siswaPoinTertinggi">-</p>
+                </div>
+                <!-- CARD 4: TINDAK LANJUT (id: dashboardcolumn-blue) -->
+                <div class="dashboard-column blue" id="dashboardcolumn-blue" data-page="tindakLanjut">
+                    <h3>Pengingat Tindak Lanjut</h3>
+                    <p id="pengingatTindakLanjut">0</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- DAFTAR PELANGGARAN (id: daftar) -->
+        <div id="daftar" class="card hidden content-section">
+            <h2>Daftar Pelanggaran</h2>
+            <!-- FILTER BAR BARU: Search Kiri, Filter Kanan -->
+            <div class="filter-controls">
+                <input type="text" id="searchPelanggaran" placeholder="Cari NIS/Nama Siswa/Pelanggaran/Guru...">
+                <div class="filters">
+                    <input type="date" id="tanggalPelanggaran">
+                    <select id="pelanggaran-filter-kelas"><option value="all">Semua Kelas</option></select>
+                    <select id="pelanggaran-filter-gender">
+                        <option value="all">Semua Gender</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                    <select id="pelanggaran-filter-jenis">
+                        <option value="all">Semua Pelanggaran</option>
+                    </select>
+                </div>
+            </div>
+            <!-- AKHIR FILTER BAR BARU -->
+            <div class="table-container">
+                 <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIS</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Kelas</th>
+                            <th>Jenis Pelanggaran</th>
+                            <th>Tanggal</th>
+                            <th>Poin Pelanggaran</th>
+                            <th>Guru Pelapor</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="pelanggaranTableBody">
+                        </tbody>
+                </table>
+            </div>
+            <div class="add-button-container">
+                <button id="inputPelanggaranBtn">Input Pelanggaran Baru</button>
+            </div>
+        </div>
+        
+        <!-- DAFTAR PENGHARGAAN (id: daftarPenghargaan) -->
+        <div id="daftarPenghargaan" class="card hidden content-section">
+            <h2>Daftar Penghargaan</h2>
+            <!-- FILTER BAR PENGHARGAAN -->
+            <div class="filter-controls">
+                <input type="text" id="searchPenghargaan" placeholder="Cari NIS/Nama Siswa/Penghargaan/Guru...">
+                <div class="filters">
+                    <!-- FILTER TANGGAL DIPINDAHKAN KE KIRI FILTER GROUP -->
+                    <input type="date" id="tanggalPenghargaan"> 
+                    
+                    <select id="penghargaan-filter-kelas"><option value="all">Semua Kelas</option></select>
+                    <select id="penghargaan-filter-gender">
+                        <option value="all">Semua Gender</option>
+                        <option value="L">Laki-laki</option>
+                        <option value="P">Perempuan</option>
+                    </select>
+                    
+                    <select id="penghargaan-filter-jenis">
+                        <option value="all">Semua Jenis</option>
+                    </select>
+                </div>
+            </div>
+            <!-- AKHIR FILTER BAR PENGHARGAAN -->
+            <div class="table-container">
+                 <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>NIS</th>
+                            <th>Nama</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Kelas</th>
+                            <th>Jenis Penghargaan</th>
+                            <th>Tanggal</th>
+                            <th>Poin Penghargaan</th>
+                            <th>Guru Pelapor</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="daftarPenghargaanBody">
+                        </tbody>
+                </table>
+            </div>
+            <div class="add-button-container">
+                <button id="inputPenghargaanBtn">Input Penghargaan Baru</button>
+            </div>
+        </div>
+
+        <!-- REKAP KELAS (id: rekap) -->
+        <div id="rekap" class="card hidden content-section">
+            <h2>Rekap Kelas</h2>
+            <!-- FILTER BARU: HANYA KELAS -->
+            <div class="filter-controls" style="justify-content: flex-start;">
+                <select id="kelasRekap">
+                    <option value="all">Semua Kelas</option>
+                    <option value="X-A">X-A</option>
+                    <option value="X-B">X-B</option>
+                    <option value="X-C">X-C</option>
+                    <option value="XI-A">XI-A</option>
+                    <option value="XI-B">XI-B</option>
+                    <option value="XI-C">XI-C</option>
+                    <option value="XII-A">XII-A</option>
+                    <option value="XII-B">XII-B</option>
+                    <option value="XII-C">XII-C</option>
+                </select>
+                <!-- Menghapus tombol Urutkan Poin dan Urutkan Abjad -->
+            </div>
+            <!-- AKHIR FILTER BARU -->
+            <div class="table-container">
+                 <table id="rekapTable" class="sortable">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Kelas</th>
+                            <th>Jumlah Pelanggaran</th>
+                            <th>Jumlah Poin Pelanggaran</th>
+                            <th>Jumlah Poin Penghargaan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data akan diisi oleh guru.js -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- DETAIL SISWA POIN TERTINGGI (id: detailSiswaTertinggi) -->
+        <div id="detailSiswaTertinggi" class="card hidden content-section">
+            <h2>Detail Siswa dengan Poin Tertinggi</h2>
+            <div class="table-container">
+                 <table id="detailSiswaInfoTable">
+                    <thead>
+                        <tr>
+                            <th>Nama Siswa</th>
+                            <th>Kelas</th>
+                            <th>Total Poin Pelanggaran</th>
+                            <th>Total Poin Penghargaan</th>
+                            <th>Akumulasi Poin</th>
+                        </tr>
+                    </thead>
+                    <tbody id="siswaTertinggiInfoBody"></tbody>
+                </table>
+            </div>
+            <h3>Riwayat Pelanggaran</h3>
+            <div class="table-container">
+                 <table id="detailPelanggaranTable">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Jenis</th>
+                            <th>Poin</th>
+                            <th>Guru Pelapor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="siswaTertinggiPelanggaranBody"></tbody>
+                </table>
+            </div>
+            <h3>Riwayat Penghargaan</h3>
+            <div class="table-container">
+                 <table id="detailPenghargaanTable">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Jenis</th>
+                            <th>Poin</th>
+                            <th>Guru Pelapor</th>
+                        </tr>
+                    </thead>
+                    <tbody id="siswaTertinggiPenghargaanBody"></tbody>
+                </table>
+            </div>
+            <button class="cancel-btn" data-page="dashboard">Kembali</button>
+        </div>
+
+        <!-- RINCIAN PELANGGARAN HARIAN (id: jumlahPelanggaran) -->
+        <div id="jumlahPelanggaran" class="card hidden content-section">
+            <h2>Rincian Pelanggaran Harian</h2>
+            <div class="filter-controls">
+                <input type="text" id="searchDetailPelanggaran" placeholder="Cari Jenis Pelanggaran...">
+                <div class="filters">
+                    <input type="date" id="tanggalDetailPelanggaran">
+                </div>
+            </div>
+             <div class="table-container">
+                 <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>Jenis Pelanggaran</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailPelanggaranBody">
+                        </tbody>
+                </table>
+             </div>
+            <p><b>Total Pelanggaran:</b> <span id="totalPelanggaranDetail">0</span></p>
+            <button class="cancel-btn" data-page="dashboard">Kembali</button>
+        </div>
+
+        <!-- RINCIAN PENGHARGAAN HARIAN (id: jumlahPenghargaan) -->
+        <div id="jumlahPenghargaan" class="card hidden content-section">
+            <h2>Rincian Penghargaan Harian</h2>
+            <div class="filter-controls">
+                 <input type="text" id="searchDetailPenghargaan" placeholder="Cari Jenis Penghargaan...">
+                <div class="filters">
+                    <input type="date" id="tanggalDetailPenghargaan">
+                </div>
+            </div>
+             <div class="table-container">
+                 <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>Jenis Penghargaan</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody id="detailPenghargaanBodyNew">
+                        </tbody>
+                </table>
+             </div>
+            <p><b>Total Penghargaan:</b> <span id="totalPenghargaanDetail">0</span></p>
+            <button class="cancel-btn" data-page="dashboard">Kembali</button>
+        </div>
+
+        <!-- GANTI PROFIL (id: gantiProfil) -->
+        <div id="gantiProfil" class="card hidden content-section">
+            <h2>Ganti Profil</h2>
+            <input type="text" id="gantiNama" placeholder="Nama Baru">
+            <label for="gantiFoto" class="file-label">Pilih Foto Profil</label>
+            <input type="file" id="gantiFoto" accept="image/*" style="display: none;">
+             <button id="simpanProfilBtn">Simpan Profil</button>
+             <button class="cancel-btn" data-page="dashboard">Batal</button>
+        </div>
+
+        <!-- TINDAK LANJUT (id: tindakLanjut) -->
+        <div id="tindakLanjut" class="card hidden content-section">
+            <h2>Tindak Lanjut Poin Tinggi</h2>
+            <div class="table-container">
+                 <table class="sortable">
+                    <thead>
+                        <tr>
+                            <th>Kelas</th>
+                            <th>Nama Siswa</th>
+                            <th>Akumulasi Poin</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tindakLanjutBody">
+                        </tbody>
+                </table>
+            </div>
+            <button class="cancel-btn" data-page="dashboard">Kembali</button>
+        </div>
+
+    </div>
+</div>
+
+<!-- ======================= MODAL INPUT PELANGGARAN BARU (Disesuaikan) ======================= -->
+<div id="inputPelanggaranOverlay" class="overlay-container">
+    <div class="input-box">
+        <h2>Input Pelanggaran Baru</h2>
+        <form id="inputPelanggaranForm">
+            <label for="kelasInput">Kelas:</label>
+            <select id="kelasInput"> </select>
+            
+            <label for="siswaInput">Nama Siswa:</label>
+            <select id="siswaInput"> </select>
+            
+            <div class="form-group-info">
+                <label for="nisAuto">NIS:</label>
+                <input type="text" id="nisAuto" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <div class="form-group-info">
+                <label for="jenisKelaminAuto">Jenis Kelamin:</label>
+                <input type="text" id="jenisKelaminAuto" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <label for="jenisPelanggaran">Jenis Pelanggaran:</label>
+            <select id="jenisPelanggaran" required>
+                <option value="" disabled selected>Pilih Jenis Pelanggaran</option>
+            </select>
+            
+            <div class="form-group-info">
+                 <label for="poinPelanggaranAuto">Poin Pelanggaran:</label>
+                <input type="text" id="poinPelanggaranAuto" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <label for="tanggalInput">Tanggal:</label>
+            <input type="date" id="tanggalInput">
+            
+            <label for="keteranganInput">Keterangan (Opsional):</label>
+            <input type="text" id="keteranganInput" placeholder="Keterangan">
+
+            <div class="modal-buttons">
+                <button type="submit" id="submitPelanggaranBtn">Tambah</button>
+                <button type="button" id="closeInputPelanggaranBtn" class="cancel-btn">Batal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ======================= MODAL EDIT PELANGGARAN ======================= -->
+<div id="editPelanggaranOverlay" class="overlay-container">
+    <div id="editBox">
+        <h2>Edit Pelanggaran Siswa</h2>
+        <form id="editPelanggaranForm">
+            <input type="hidden" id="editRiwayatId">
+            
+            <label for="editNamaSiswa">Nama Siswa:</label>
+            <input type="text" id="editNamaSiswa" disabled style="background-color: #f0f0f0; color: #888;">
+            
+            <label for="editKelasSiswa">Kelas:</label>
+            <input type="text" id="editKelasSiswa" disabled style="background-color: #f0f0f0; color: #888;">
+            
+            <label for="editJenisPelanggaran">Jenis Pelanggaran:</label>
+            <select id="editJenisPelanggaran" required>
+                <option value="" disabled>Pilih Jenis Pelanggaran</option>
+            </select>
+            
+            <div class="form-group-info">
+                <label for="editPoinPelanggaran">Poin Pelanggaran:</label>
+                <input type="number" id="editPoinPelanggaran" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+            
+            <label for="editGuruPelapor">Guru Pelapor:</label>
+            <select id="editGuruPelapor" disabled style="background-color: #f0f0f0; color: #888;">
+                <!-- Opsi diisi oleh JS, dikunci -->
+            </select>
+            
+            <label for="editTanggalInput">Tanggal:</label>
+            <input type="date" id="editTanggalInput">
+            
+            <label for="editKeterangan">Keterangan (Opsional):</label>
+            <input type="text" id="editKeterangan" placeholder="Keterangan">
+
+            <div class="modal-buttons">
+                <button type="submit" id="simpanPerubahanBtn">Edit</button>
+                <button type="button" id="batalEditBtn" class="cancel-btn">Batal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ======================= MODAL INPUT PENGHARGAAN BARU (Disesuaikan) ======================= -->
+<div id="inputPenghargaanOverlay" class="overlay-container">
+    <div class="input-box">
+        <h2>Input Penghargaan Baru</h2>
+        <form id="inputPenghargaanForm">
+            <label for="kelasInputPenghargaan">Kelas:</label>
+            <select id="kelasInputPenghargaan"> </select>
+            
+            <label for="siswaInputPenghargaan">Nama Siswa:</label>
+            <select id="siswaInputPenghargaan"> </select>
+            
+            <div class="form-group-info">
+                <label for="nisAutoPenghargaan">NIS:</label>
+                <input type="text" id="nisAutoPenghargaan" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <div class="form-group-info">
+                <label for="jenisKelaminAutoPenghargaan">Jenis Kelamin:</label>
+                <input type="text" id="jenisKelaminAutoPenghargaan" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <label for="jenisPenghargaan">Jenis Penghargaan:</label>
+            <select id="jenisPenghargaan" required>
+                <option value="" disabled selected>Pilih Jenis Penghargaan</option>
+            </select>
+            
+            <div class="form-group-info">
+                 <label for="poinPenghargaanAuto">Poin Penghargaan:</label>
+                <input type="text" id="poinPenghargaanAuto" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+            
+            <label for="tanggalInputPenghargaan">Tanggal:</label>
+            <input type="date" id="tanggalInputPenghargaan">
+            
+            <label for="keteranganInputPenghargaan">Keterangan (Opsional):</label>
+            <input type="text" id="keteranganInputPenghargaan" placeholder="Keterangan">
+            
+            <div class="modal-buttons">
+                <button type="submit" id="submitPenghargaanBtn">Tambah</button>
+                <button type="button" id="closeInputPenghargaanBtn2" class="cancel-btn">Batal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ======================= MODAL EDIT PENGHARGAAN (Disesuaikan) ======================= -->
+<div id="editPenghargaanOverlay" class="overlay-container">
+    <div id="editPenghargaanBox">
+        <h2>Edit Penghargaan Siswa</h2>
+        <form id="editPenghargaanForm">
+            <input type="hidden" id="editPenghargaanRiwayatId"> 
+            
+            <label for="editNamaSiswaPenghargaan">Nama Siswa:</label>
+            <input type="text" id="editNamaSiswaPenghargaan" disabled style="background-color: #f0f0f0; color: #888;">
+            
+            <label for="editKelasSiswaPenghargaan">Kelas:</label>
+            <input type="text" id="editKelasSiswaPenghargaan" disabled style="background-color: #f0f0f0; color: #888;">
+
+            <label for="editJenisPenghargaanNew">Jenis Penghargaan:</label>
+            <select id="editJenisPenghargaanNew" required> 
+                <option value="" disabled>Pilih Jenis Penghargaan</option>
+            </select>
+
+            <div class="form-group-info">
+                 <label for="editPoinPenghargaanValue">Poin Penghargaan:</label>
+                <input type="text" id="editPoinPenghargaanValue" disabled style="background-color: #f0f0f0; color: #888;">
+            </div>
+
+            <label for="editGuruPelaporPenghargaan">Guru Pelapor:</label>
+            <select id="editGuruPelaporPenghargaan" disabled style="background-color: #f0f0f0; color: #888;">
+                <!-- Opsi diisi oleh JS, dikunci -->
+            </select>
+            
+            <label for="editTanggalPenghargaanInput">Tanggal:</label>
+            <input type="date" id="editTanggalPenghargaanInput">
+
+            <label for="editKeteranganPenghargaan">Keterangan (Opsional):</label>
+            <input type="text" id="editKeteranganPenghargaan" placeholder="Keterangan">
+
+            <div class="modal-buttons">
+                <button type="submit" id="simpanPerubahanPenghargaanBtn">Simpan</button>
+                <button type="button" id="batalEditPenghargaanBtn" class="cancel-btn">Batal</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="db.js"></script>
+<script src="guru.js" type="module"></script>
+</body>
+</html>

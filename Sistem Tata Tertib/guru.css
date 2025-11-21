@@ -1,0 +1,601 @@
+/* ================= FONT & WARNA DASAR ================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- LOGOUT CONFIRMATION STYLING (BARU) --- */
+.confirm-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    transition: opacity 0.3s ease;
+}
+
+.confirm-overlay.hidden {
+    display: none;
+}
+
+.confirm-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    max-width: 320px;
+    width: 90%;
+}
+
+.confirm-card p {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 24px;
+}
+
+.confirm-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.confirm-btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-btn.yes {
+    background: #28a745;
+    color: white;
+}
+
+.confirm-btn.yes:hover {
+    background: #218838;
+}
+
+.confirm-btn.no {
+    background: #dc3545;
+    color: white;
+}
+
+.confirm-btn.no:hover {
+    background: #c82333;
+}
+/* --- END LOGOUT CONFIRMATION STYLING --- */
+
+
+/* ================= HALAMAN LOGIN ================= */
+#loginPage {
+    /* Dihapus dari HTML, tapi style tetap dipertahankan untuk referensi */
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#loginBox {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+#loginBox h2 {
+    margin-bottom: 20px;
+}
+
+#loginBox input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#loginBox button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#loginBox button:hover {
+    background-color: #0056b3;
+}
+
+#error {
+    color: red;
+    margin-top: 10px;
+    height: 20px;
+}
+
+/* ================= HALAMAN UTAMA (ADMIN STYLE) ================= */
+#mainPage {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    background-color: #f0f2f5;
+}
+
+/* ================= SIDEBAR (DISAMAKAN DENGAN ADMIN) ================= */
+.side-navbar {
+    margin: 0;
+    max-width: 300px;
+    width: 100%;
+    height: 100%;
+    background: #1532b3; /* Warna biru Admin */
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+}
+
+.logo-section { display: flex; align-items: center; padding: 15px; }
+.logo-container { width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.logo { width: 40px; height: auto; }
+.navbar-title { margin-left: 15px; flex-grow: 1; }
+.navbar-text { color: white; font-weight: 500; font-size: 16px; white-space: normal; word-break: break-word; }
+
+.menu { display: flex; flex-direction: column; overflow-y: auto; flex-grow: 1; padding: 0; }
+
+/* Styling Menu Items */
+.menu-item, .data-header {
+    padding: 15px 20px;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Changed to center for consistency */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu > :first-child {
+    border-top: none;
+}
+
+.menu-item:hover, .data-header:hover { background: rgba(255, 255, 255, 0.1); }
+.menu-item.active { background: rgba(255, 255, 255, 0.2); }
+
+/* Styling Dropdown/Submenu */
+.data-container { width: 100%; }
+.data-header { display: flex; justify-content: space-between; }
+/* PANAH BARU (Mengambil dari admin.css) */
+.arrow-open { width: 24px; transition: transform 0.3s ease; }
+.data-header.active .arrow-open { transform: rotate(90deg); }
+
+
+.sub-menu { 
+    max-height: 0; 
+    overflow: hidden; 
+    transition: max-height 0.4s ease-out; 
+    background: rgba(0,0,0,0.1);
+    padding: 0; 
+}
+.sub-menu.active { max-height: 200px; transition: max-height 0.4s ease-in; }
+.sub-menu .menu-item { 
+    padding-left: 40px; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+
+/* User Profile Section */
+.user-profile { 
+    display: flex; 
+    align-items: center; 
+    padding: 15px; 
+    border-top: 1px solid rgba(255, 255, 255, 0.1); 
+    flex-shrink: 0; 
+    position: relative;
+    cursor: pointer;
+}
+.profile-pic { width: 40px; height: 40px; border-radius: 50%; margin-right: 15px; }
+.profile-details { display: flex; flex-direction: column; }
+.profile-name { color: white; font-weight: bold; }
+.profile-status { color: #ccc; font-size: 12px; }
+
+#logout-popup {
+    position: absolute;
+    bottom: 60px; 
+    left: 10px;
+    background-color: white; /* Diubah ke putih */
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); /* Menambahkan shadow */
+    width: calc(100% - 20px);
+    z-index: 500;
+    padding: 0;
+    overflow: hidden;
+}
+
+#logout-popup div { /* Styling untuk item di dropdown */
+    padding: 10px 15px;
+    color: #333;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#logout-popup div:hover { background-color: #f0f0f0; } /* Hover light grey */
+#logout-popup .separator { height: 1px; background-color: #ddd; margin: 0; } /* Separator light grey */
+
+
+.main-content { flex-grow: 1; padding: 20px; background-color: #f0f2f5; width: 100%; overflow-y: auto; }
+.content-section { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); margin-bottom: 20px;}
+.hidden { display: none; }
+
+/* ================= DASHBOARD STYLING BARU (MATCHING ADMIN) ================= */
+#dashboardDate {
+    font-size: 1.1em;
+    color: #6c757d;
+    margin-top: -10px;
+    margin-bottom: 20px;
+}
+
+.dashboard-columns {
+    display: flex;
+    gap: 20px;
+}
+.dashboard-column {
+    flex: 1;
+    padding: 20px;
+    border-radius: 8px;
+    color: white; /* WAJIB: Mengubah warna teks menjadi putih agar kontras dengan warna solid Admin */
+    cursor: pointer; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dashboard-column:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+/* PALET WARNA DISAMAKAN DENGAN ADMIN DASHBOARD */
+/* MAPPING: 
+   Yellow (Pelanggaran Harian) -> Admin Orange (#fd7e14) 
+   Green (Penghargaan Harian) -> Admin Blue (#007bff)
+   Red (Siswa Poin Tertinggi) -> Admin Red (#dc3545)
+   Blue (Tindak Lanjut) -> Admin Purple (#6f42c1)
+*/
+.dashboard-column.yellow { 
+    background-color: #fd7e14; /* Admin Orange */
+}
+.dashboard-column.green { 
+    background-color: #007bff; /* Admin Blue */
+}
+.dashboard-column.red { 
+    background-color: #dc3545; /* Admin Red */
+}
+.dashboard-column.blue { 
+    background-color: #6f42c1; /* Admin Purple */
+}
+/* ================= AKHIR DASHBOARD STYLING BARU ================= */
+
+
+/* ================= FILTER BAR DAFTAR PELANGGARAN & PENGHARGAAN ================= */
+.filter-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap; /* Pastikan responsif */
+    gap: 10px;
+}
+
+/* Mengatur lebar search bar agar tidak terlalu mendominasi */
+#searchPelanggaran, #searchPenghargaan {
+    padding: 8px 12px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    min-width: 250px;
+}
+
+.filter-controls .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.filter-controls input[type="date"], .filter-controls select {
+    padding: 8px 12px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+}
+
+/* ================= STYLING BARU UNTUK RINCIAN HARIAN (id jumlahPelanggaran dan id jumlahPenghargaan) ================= */
+/* Menyamakan styling filter di halaman rincian harian */
+#jumlahPelanggaran .filter-controls input[type="text"],
+#jumlahPenghargaan .filter-controls input[type="text"] {
+    padding: 8px 12px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+    min-width: 250px;
+}
+
+#jumlahPelanggaran .filter-controls .filters,
+#jumlahPenghargaan .filter-controls .filters {
+    gap: 10px;
+}
+
+#jumlahPelanggaran .filter-controls input[type="date"],
+#jumlahPenghargaan .filter-controls input[type="date"] {
+     padding: 8px 12px; 
+    border-radius: 5px; 
+    border: 1px solid #ccc; 
+}
+/* ================= AKHIR STYLING BARU UNTUK RINCIAN HARIAN ================= */
+
+
+/* ================= TABEL (DISAMAKAN DENGAN ADMIN STYLE) ================= */
+.table-container { 
+    overflow-x: auto; 
+    margin-top: 20px; 
+}
+.sortable, #rekapTable, #detailSiswaInfoTable, #detailPelanggaranTable, #detailPenghargaanTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.sortable th, .sortable td, #rekapTable th, #rekapTable td, #detailSiswaInfoTable th, #detailSiswaInfoTable td, #detailPelanggaranTable th, #detailPelanggaranTable td, #detailPenghargaanTable th, #detailPenghargaanTable td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+.sortable th, #detailPelanggaranTable th, #detailPenghargaanTable th {
+    background-color: #f4f6f8; 
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.sortable tbody tr:nth-child(odd) { background-color: #fff; }
+.sortable tbody tr:hover { background-color: #f1f3f5; }
+
+
+/* ================= CHIP STYLING ================= */
+.chip { 
+    padding: 5px 10px; 
+    border-radius: 15px; 
+    font-weight: bold; 
+    font-size: 12px; 
+    display: inline-block;
+    white-space: nowrap;
+}
+/* Chip untuk Laki-laki (biru) */
+.chip-l { 
+    background-color: #add8e6; 
+    color: #333; 
+    font-weight: bold; 
+} 
+/* Chip untuk Perempuan (pink) */
+.chip-p { 
+    background-color: #ffc0cb; 
+    color: #333; 
+    font-weight: bold; 
+} 
+/* Chip untuk Kelas (abu-abu) */
+.chip-kelas { 
+    background-color: #f2f2f2; 
+    color: #333;
+    font-weight: bold; 
+}
+/* Chip untuk Poin Pelanggaran (merah) */
+.chip-pelanggaran { 
+    background-color: #e74c3c; 
+    color: white; 
+    font-weight: bold; 
+}
+/* Chip untuk Poin Penghargaan (hijau) */
+.chip-penghargaan { 
+    background-color: #2ecc71; 
+    color: white; 
+    font-weight: bold; 
+}
+/* Chip untuk Poin Akumulasi (abu gelap) */
+.chip-akumulasi { 
+    background-color: #7f8c8d; 
+    color: white; 
+    font-weight: bold; 
+}
+
+
+/* ================= ACTION DROPDOWN STYLING ================= */
+.action-dropdown { 
+    position: relative; 
+    display: inline-block; 
+}
+.action-btn { 
+    background-color: #007bff; 
+    color: white; 
+    padding: 8px 12px; 
+    border: none; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    transition: background-color 0.3s;
+    font-size: 14px;
+    display: inline-flex; /* Agar panah dan teks sejajar */
+    align-items: center;
+}
+.action-btn:hover {
+    background-color: #0056b3;
+}
+
+.arrow-down { 
+    margin-left: 5px; 
+    border: solid white; 
+    border-width: 0 2px 2px 0; 
+    display: inline-block; 
+    padding: 3px; 
+    transform: rotate(45deg); 
+    transition: transform 0.3s ease; 
+}
+.action-btn.open .arrow-down { 
+    transform: rotate(-135deg); 
+}
+
+.dropdown-content { 
+    display: none; 
+    position: absolute; 
+    background-color: #f9f9f9; 
+    min-width: 120px; 
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2); 
+    z-index: 10; /* Lebih tinggi dari tabel */
+    border-radius: 5px; 
+    right: 0; /* Align ke kanan tombol */
+    top: 100%;
+    margin-top: 5px;
+    overflow: hidden;
+}
+.dropdown-content.show { 
+    display: block; 
+}
+.dropdown-content a { 
+    color: #333; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    display: block; 
+    font-size: 14px;
+    cursor: pointer;
+}
+.dropdown-content a:hover { 
+    background-color: #f1f1f1; 
+}
+.dropdown-content .delete-btn {
+    color: #dc3545; /* Warna merah untuk Hapus */
+}
+/* ================= AKHIR ACTION DROPDOWN STYLING ================= */
+
+
+.add-button-container {
+    margin-top: 20px;
+}
+#inputPelanggaranBtn, #inputPenghargaanBtn {
+    padding: 10px 15px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+
+/* ================= OVERLAY EDIT & INPUT ================= */
+.overlay-container {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+#editBox, #editPenghargaanBox, .input-box {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    width: 400px;
+}
+
+#editBox h2, #editPenghargaanBox h2, .input-box h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+#editBox input, #editBox select, #editPenghargaanBox input, #editPenghargaanBox select, .input-box input, .input-box select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Styling untuk form info yang dikunci */
+.form-group-info input[disabled],
+.form-group-info select[disabled],
+#editNamaSiswa[disabled],
+#editKelasSiswa[disabled],
+#editGuruPelapor[disabled],
+#editNamaSiswaPenghargaan[disabled],
+#editKelasSiswaPenghargaan[disabled],
+#editGuruPelaporPenghargaan[disabled] {
+    background-color: #f0f0f0;
+    color: #555;
+    cursor: not-allowed;
+}
+
+
+/* Tombol dalam Modal/Overlay */
+#editBox button, #editPenghargaanBox button, .input-box button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    margin-right: 10px;
+}
+
+#simpanPerubahanBtn, #submitPelanggaranBtn, #simpanPerubahanPenghargaanBtn, #submitPenghargaanBtn {
+    background-color: #28a745;
+    color: white;
+}
+
+/* ================= MODERN STYLE FOR KEMBALI BUTTON ================= */
+.cancel-btn {
+    /* Menggunakan warna abu-abu yang lebih netral dan modern, mirip dengan 'secondary' */
+    background-color: #6c757d; 
+    color: white;
+    padding: 10px 20px; 
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.1s;
+    /* Memberikan jarak dengan elemen di atasnya (tabel) */
+    margin-top: 20px; 
+    margin-left: 0;
+    display: inline-block; 
+    text-align: center;
+}
+
+.cancel-btn:hover {
+    background-color: #5a6268; 
+    transform: translateY(-1px);
+}
+
+.cancel-btn:active {
+    transform: translateY(0);
+}
