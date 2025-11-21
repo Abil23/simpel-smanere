@@ -40,18 +40,18 @@ const INITIAL_PELANGGARAN_DATA = [
 
 const INITIAL_RIWAYAT_PELANGGARAN_DATA = [
     // Riwayat Pelanggaran: id, siswaId, pelanggaranId, poin, tanggal, guruId, tindakLanjut
-    { id: 1, siswaId: 1, pelanggaranId: 1, poin: 5, tanggal: '2025-10-10', guruId: 1, tindakLanjut: true }, 
-    { id: 2, siswaId: 2, pelanggaranId: 2, poin: 10, tanggal: '2025-10-15', guruId: 2, tindakLanjut: false }, 
-    { id: 3, siswaId: 4, pelanggaranId: 3, poin: 50, tanggal: '2025-10-20', guruId: 1, tindakLanjut: true }, 
-    { id: 4, siswaId: 5, pelanggaranId: 6, poin: 25, tanggal: '2025-10-01', guruId: 3, tindakLanjut: false }, 
-    { id: 5, siswaId: 6, pelanggaranId: 5, poin: 100, tanggal: '2025-10-05', guruId: 2, tindakLanjut: true }, 
-    { id: 6, siswaId: 1, pelanggaranId: 9, poin: 5, tanggal: '2025-10-10', guruId: 3, tindakLanjut: false }, 
-    { id: 7, siswaId: 2, pelanggaranId: 7, poin: 5, tanggal: '2025-10-15', guruId: 1, tindakLanjut: true }, 
-    { id: 8, siswaId: 7, pelanggaranId: 4, poin: 75, tanggal: '2025-10-01', guruId: 2, tindakLanjut: false }, 
-    { id: 9, siswaId: 7, pelanggaranId: 3, poin: 50, tanggal: '2025-10-05', guruId: 3, tindakLanjut: true }, 
-    { id: 10, siswaId: 6, pelanggaranId: 2, poin: 10, tanggal: '2025-10-10', guruId: 1, tindakLanjut: false }, 
-    { id: 11, siswaId: 4, pelanggaranId: 10, poin: 10, tanggal: '2025-10-15', guruId: 3, tindakLanjut: false }, 
-    { id: 12, siswaId: 6, pelanggaranId: 1, poin: 5, tanggal: '2025-10-20', guruId: 2, tindakLanjut: true }, 
+    { id: 1, siswaId: 1, pelanggaranId: 1, poin: 5, tanggal: '2025-11-22', guruId: 1, tindakLanjut: true }, 
+    { id: 2, siswaId: 2, pelanggaranId: 2, poin: 10, tanggal: '2025-11-23', guruId: 2, tindakLanjut: false }, 
+    { id: 3, siswaId: 4, pelanggaranId: 3, poin: 50, tanggal: '2025-11-24', guruId: 1, tindakLanjut: true }, 
+    { id: 4, siswaId: 5, pelanggaranId: 6, poin: 25, tanggal: '2025-11-25', guruId: 3, tindakLanjut: false }, 
+    { id: 5, siswaId: 6, pelanggaranId: 5, poin: 100, tanggal: '2025-11-26', guruId: 2, tindakLanjut: true }, 
+    { id: 6, siswaId: 1, pelanggaranId: 9, poin: 5, tanggal: '2025-11-27', guruId: 3, tindakLanjut: false }, 
+    { id: 7, siswaId: 2, pelanggaranId: 7, poin: 5, tanggal: '2025-11-22', guruId: 1, tindakLanjut: true }, 
+    { id: 8, siswaId: 7, pelanggaranId: 4, poin: 75, tanggal: '2025-11-23', guruId: 2, tindakLanjut: false }, 
+    { id: 9, siswaId: 7, pelanggaranId: 3, poin: 50, tanggal: '2025-11-24', guruId: 3, tindakLanjut: true }, 
+    { id: 10, siswaId: 6, pelanggaranId: 2, poin: 10, tanggal: '2025-11-25', guruId: 1, tindakLanjut: false }, 
+    { id: 11, siswaId: 4, pelanggaranId: 10, poin: 10, tanggal: '2025-11-26', guruId: 3, tindakLanjut: false }, 
+    { id: 12, siswaId: 6, pelanggaranId: 1, poin: 5, tanggal: '2025-11-27', guruId: 2, tindakLanjut: true }, 
 ];
 
 // Data Kategori Penghargaan
@@ -65,10 +65,10 @@ const INITIAL_KATEGORI_PENGHARGAAN_DATA = [
 // Data Riwayat Penghargaan Baru
 const INITIAL_RIWAYAT_PENGHARGAAN_DATA = [
     // Riwayat Penghargaan: id, siswaId, kategoriId, poin, tanggal, guruId
-    { id: 1, siswaId: 1, kategoriId: 1, poin: 5, tanggal: '2025-10-20', guruId: 1 }, 
-    { id: 2, siswaId: 3, kategoriId: 2, poin: 10, tanggal: '2025-10-19', guruId: 2 },
-    { id: 3, siswaId: 8, kategoriId: 3, poin: 15, tanggal: '2025-10-01', guruId: 3 },
-    { id: 4, siswaId: 10, kategoriId: 1, poin: 5, tanggal: '2025-10-15', guruId: 1 },
+    { id: 1, siswaId: 1, kategoriId: 1, poin: 5, tanggal: '2025-11-22', guruId: 1 }, 
+    { id: 2, siswaId: 3, kategoriId: 2, poin: 10, tanggal: '2025-11-23', guruId: 2 },
+    { id: 3, siswaId: 8, kategoriId: 3, poin: 15, tanggal: '2025-11-24', guruId: 3 },
+    { id: 4, siswaId: 10, kategoriId: 1, poin: 5, tanggal: '2025-11-25', guruId: 1 },
 ];
 
 
